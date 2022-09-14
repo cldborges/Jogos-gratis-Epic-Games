@@ -30,9 +30,11 @@ def f():
 
     driver.get(url)    
 
+    #esperando a página de jogos carregar
     WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'css-1myhtyb')))
 
+    #pega os jogos grátis da semana
     jogos_gratis = driver.find_element(By.CLASS_NAME, 'css-1myhtyb')
     jogos_gratis_da_semana = jogos_gratis.find_elements(By.CLASS_NAME, 'css-5auk98')
     print(len(jogos_gratis_da_semana))
@@ -48,29 +50,31 @@ def f():
             print(links)
         except:
             pass
-
+    
+    #abre cada link obtido
     for link in links:
         driver.get(link)
+        # procura o botão de compras
         try:
             WebDriverWait(driver, 50).until(
-                EC.presence_of_element_located((By.CLASS_NAME, 'css-187rod9'))
+                EC.presence_of_element_located((By.CLASS_NAME, 'css-187rod9')) # FAZER PEDIDO
                 )
         except:
             print('Não funcionou aqui')
             driver.quit()
         print(driver.find_element(By.CLASS_NAME, 'css-187rod9').text)
         driver.find_element(By.CLASS_NAME, 'css-187rod9').click()
-        time.sleep(15)
+        #time.sleep(15)
         try:
             #WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'purchase-app'))
             #WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button'))
                 #)
             time.sleep(15)
+            print(driver.find_element(By.CLASS_NAME, 'css-8en90x').text)
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
             print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').text) 
             driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').click()
             time.sleep(15)
-            driver.find_element(By.NAME, 'FAZER PEDIDO').click()
             print('achou o popup')
         except:
             print('Não achou o botão de compra')
