@@ -56,43 +56,27 @@ def f():
         driver.get(link)
         # procura o botão de compras
         try:
-            WebDriverWait(driver, 50).until(
+            WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'css-187rod9')) # FAZER PEDIDO
                 )
-        except:
-            print('Não funcionou aqui')
-            driver.quit()
-        print(driver.find_element(By.CLASS_NAME, 'css-187rod9').text)
-        driver.find_element(By.CLASS_NAME, 'css-187rod9').click()
-        #time.sleep(15)
-        try:
-            #WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, 'purchase-app'))
-            #WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button'))
-                #)
-            time.sleep(15)
-            print(driver.find_element(By.CLASS_NAME, 'css-8en90x').text)
+            print(driver.find_element(By.CLASS_NAME, 'css-187rod9').text)
+            driver.find_element(By.CLASS_NAME, 'css-187rod9').click()
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
             print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').text) 
             driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').click()
             time.sleep(15)
             print('achou o popup')
         except:
-            print('Não achou o botão de compra')
-            botoes = driver.find_elements(By.TAG_NAME, 'button')
-            botoes_nome = driver.find_elements(By.NAME, 'FAZER PEDIDO')
-            botoes_span = driver.find_elements(By.TAG_NAME, 'span')
-            for botao_nome in botoes_nome:
-                print(f'botão {botao_nome}')
-            for botao in botoes:
-                print(botao.text)
-            for botao_span in botoes_span:
-                print(f'botão {botao_span.text}')
-            time.sleep(60)
+            print('Não achou o botão FAZER PEDIDO')
+            try:
+                WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.CLASS_NAME, 'css-8en90x')) # INDISPONÍVEL ou NA BIBLIOTECA
+                )
+                print(driver.find_element(By.CLASS_NAME, 'css-8en90x').text)
+            except:
+                print('Não achou os botões INDISPONÍVEL ou NA BIBLIOTECA')
+                #driver.quit()
 
-#               driver.quit()
-
-        #time.sleep(90)
-        
     print(links)
 
 if __name__ == '__main__':
