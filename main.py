@@ -26,8 +26,6 @@ def f():
     time.sleep(20)
 
     #driver.maximize_window()
-    #driver.implicitly_wait(30)
-
     driver.get(url)    
 
     #esperando a página de jogos carregar
@@ -57,17 +55,19 @@ def f():
         # procura o botão de compras
         try:
             WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.CLASS_NAME, 'css-187rod9')) # FAZER PEDIDO
+                EC.presence_of_element_located((By.XPATH, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button')) # FAZER PEDIDO
                 )
-            print(driver.find_element(By.CLASS_NAME, 'css-187rod9').text)
-            driver.find_element(By.CLASS_NAME, 'css-187rod9').click()
+            print(driver.find_element(By.XPATH, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button').text)
+            driver.find_element(By.XPATH, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button').click()
+            time.sleep(10)
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
             print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').text) 
             driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').click()
-            time.sleep(15)
+            time.sleep(10)
             print('achou o popup')
         except:
             print('Não achou o botão FAZER PEDIDO')
+            # verifica se o jogo está indisponível
             try:
                 WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'css-8en90x')) # INDISPONÍVEL ou NA BIBLIOTECA
