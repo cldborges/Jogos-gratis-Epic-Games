@@ -3,7 +3,7 @@ import undetected_chromedriver.v2 as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import pickle
+#import pickle
 import time
 
 from funcoes import login_with_epic, salvar_cookies
@@ -35,7 +35,7 @@ def f():
     #pega os jogos grátis da semana
     jogos_gratis = driver.find_element(By.CLASS_NAME, 'css-1myhtyb')
     jogos_gratis_da_semana = jogos_gratis.find_elements(By.CLASS_NAME, 'css-5auk98')
-    print(len(jogos_gratis_da_semana))
+    print('Número de jogos grátis: ', len(jogos_gratis_da_semana))
 
     #pegar links
     links = []
@@ -55,10 +55,13 @@ def f():
         # procura o botão de compras
         try:
             WebDriverWait(driver, 20).until(
-                EC.presence_of_element_located((By.XPATH, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button')) # FAZER PEDIDO
+                EC.presence_of_element_located((By.CLASS_NAME, 'css-8en90x')) # BOTÃO OBTER
                 )
-            print(driver.find_element(By.XPATH, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button').text)
-            driver.find_element(By.XPATH, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[2]/div/aside/div/div/div[5]/div/button').click()
+            time.sleep(10)
+            span_botao = (driver.find_element(By.CLASS_NAME, 'css-8en90x'))
+            botao_obter = span_botao.find_element(By.XPATH, '..') # Botão "pai" da span_botao
+            botao_obter.click()     
+            #driver.find_element(By.CLASS_NAME, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[4]/div/aside/div/div/div[5]/div/button').click()
             time.sleep(10)
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
             print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').text) 
@@ -66,7 +69,8 @@ def f():
             time.sleep(10)
             print('achou o popup')
         except:
-            print('Não achou o botão FAZER PEDIDO')
+            print('Não achou o botão OBTER')
+            print('Texto do botão OBTER: ', driver.find_element(By.CLASS_NAME, 'css-8en90x').text)
             # verifica se o jogo está indisponível
             try:
                 WebDriverWait(driver, 20).until(
