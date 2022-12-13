@@ -23,7 +23,7 @@ def f():
     #login   
     login_with_epic(driver)
 
-    time.sleep(20)
+    time.sleep(40) #era 60
 
     #driver.maximize_window()
     driver.get(url)    
@@ -31,10 +31,12 @@ def f():
     #esperando a página de jogos carregar
     WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'css-1myhtyb')))
+    # print('achou a pagina')
+    # time.sleep(10)
 
     #pega os jogos grátis da semana
-    jogos_gratis = driver.find_element(By.CLASS_NAME, 'css-1myhtyb')
-    jogos_gratis_da_semana = jogos_gratis.find_elements(By.CLASS_NAME, 'css-5auk98')
+    jogos_gratis = driver.find_element(By.CLASS_NAME, 'css-1myhtyb') #div com todos os jogos grátis
+    jogos_gratis_da_semana = jogos_gratis.find_elements(By.CLASS_NAME, 'css-1ukp34s') #cada um dos jogos, antigo css-5auk98
     print('Número de jogos grátis: ', len(jogos_gratis_da_semana))
 
     #pegar links
@@ -64,8 +66,8 @@ def f():
             #driver.find_element(By.CLASS_NAME, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[4]/div/aside/div/div/div[5]/div/button').click()
             time.sleep(10)
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
-            print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').text) 
-            driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button').click()
+            print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button').text) #//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button
+            driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button').click()
             time.sleep(10)
             print('achou o popup')
         except:
