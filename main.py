@@ -6,12 +6,13 @@ from selenium.webdriver.support import expected_conditions as EC
 #import pickle
 import time
 
-from funcoes import login_with_epic, salvar_cookies
+from funcoes import *
 
 def f():
 
+    chrome_version = get_chrome_version()
     url = 'https://store.epicgames.com/pt-BR/free-games'
-    driver = uc.Chrome()
+    driver = uc.Chrome(version_main=chrome_version)
     #driver.get('https://nowsecure.nl')  # known url using cloudflare's "under attack mode"
     #cookies = pickle.load(open("cookies.pkl", "rb"))
 

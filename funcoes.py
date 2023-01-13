@@ -3,6 +3,10 @@ import pickle
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
+
 
 def cadastrar_credenciais(usuario='', senha=''):
     if usuario =='':
@@ -13,15 +17,18 @@ def cadastrar_credenciais(usuario='', senha=''):
         arquivo.write(f'{usuario}\n{senha}')
     print('Usuário e senha atualizados!')
 
+
 def ler_credenciais():
     with open('conf.txt', 'r', encoding='utf-8') as arquivo:
         usuario, senha = arquivo.readlines()
     return usuario, senha
 
+
 def salvar_cookies(driver):
     time.sleep(90)
     pickle.dump( driver.get_cookies() , open("cookies.pkl","wb"))
     print('Cookies Salvos!')
+
 
 def login_with_epic(driver):
     driver.get('https://www.epicgames.com/site/login')
@@ -37,3 +44,12 @@ def login_with_epic(driver):
     driver.find_element(By.ID, 'password').send_keys(senha)
     time.sleep(2)
     driver.find_element(By.ID, 'sign-in').click()
+
+
+def get_chrome_version():
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager(path = r"C:\Temp\Sessoes\chromedriver").install()))
+    # driver.get('www.google.com.br')
+    version = driver.capabilities["browserVersion"].split('.')[0]
+    driver.quit()
+    print(f'Versão do chrome: {version}')
+    return version
