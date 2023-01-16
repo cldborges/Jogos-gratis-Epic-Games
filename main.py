@@ -26,18 +26,18 @@ def f():
 
     time.sleep(40) #era 60
 
-    #driver.maximize_window()
+    driver.maximize_window()
     driver.get(url)    
 
     #esperando a página de jogos carregar
     WebDriverWait(driver, 50).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'css-1myhtyb')))
     # print('achou a pagina')
-    # time.sleep(10)
+    # time.sleep(1000)
 
     #pega os jogos grátis da semana
     jogos_gratis = driver.find_element(By.CLASS_NAME, 'css-1myhtyb') #div com todos os jogos grátis
-    jogos_gratis_da_semana = jogos_gratis.find_elements(By.CLASS_NAME, 'css-1ukp34s') #cada um dos jogos, antigo css-5auk98
+    jogos_gratis_da_semana = jogos_gratis.find_elements(By.XPATH, './div') #cada um dos jogos, antigo css-5auk98 ou css-1ukp34s
     print('Número de jogos grátis: ', len(jogos_gratis_da_semana))
 
     #pegar links
@@ -48,10 +48,9 @@ def f():
             jogo_gratis_semana = jogo_gratis.find_element(By.CLASS_NAME, 'css-11xvn05') #verifica se tem a DIV "GRÁTIS" no jogo
             link = jogo_gratis.find_element(By.CSS_SELECTOR, 'a').get_attribute("href")
             links.append(link)
-            print(links)
         except:
             pass
-    
+    print(links)
     #abre cada link obtido
     for link in links:
         driver.get(link)
