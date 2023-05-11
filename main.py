@@ -23,8 +23,9 @@ def f():
 
     #login   
     login_with_epic(driver)
-
-    time.sleep(40) #era 60
+    WebDriverWait(driver, 50).until(
+            EC.presence_of_element_located((By.LINK_TEXT, 'CLDBORGES')))
+    # time.sleep(40) #era 60
 
     driver.maximize_window()
     driver.get(url)    
@@ -59,12 +60,22 @@ def f():
             WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'css-8en90x')) # BOTÃO OBTER
                 )
-            time.sleep(10)
+            # time.sleep(10)
             span_botao = (driver.find_element(By.CLASS_NAME, 'css-8en90x'))
             botao_obter = span_botao.find_element(By.XPATH, '..') # Botão "pai" da span_botao
-            botao_obter.click()     
+            botao_obter.click()
             #driver.find_element(By.CLASS_NAME, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[4]/div/aside/div/div/div[5]/div/button').click()
             time.sleep(10)
+            # WebDriverWait(driver, 300).until(
+            #     EC.frame_to_be_available_and_switch_to_it(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe')
+            # )
+            # WebDriverWait(driver, 300).until(
+            #     EC.text_to_be_present_in_element(By.CLASS_NAME, 'css-8en90x', ('OBTER' or 'NA BIBLIOTECA' or 'INDISPONÍVEL'))
+            # )
+            # print ('teste')
+            # WebDriverWait(driver, 10).until(
+            #     EC.element_to_be_clickable(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button')
+            # )
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
             print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button').text) #//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button
             driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button').click()
