@@ -60,7 +60,14 @@ def f():
             WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'css-8en90x')) # BOTÃO OBTER
                 )
-            # time.sleep(10)
+            try:
+                WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.CLASS_NAME, 'css-1a6we1t')) # BOTÃO Continuar, caso o jogo não seja classificado
+                )
+                driver.find_element(By.CLASS_NAME, 'css-1a6we1t').click()
+            except:
+                pass
+            time.sleep(10)
             span_botao = (driver.find_element(By.CLASS_NAME, 'css-8en90x'))
             botao_obter = span_botao.find_element(By.XPATH, '..') # Botão "pai" da span_botao
             botao_obter.click()
