@@ -1,11 +1,9 @@
 from multiprocessing import Process, freeze_support
-import undetected_chromedriver.v2 as uc
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-#import pickle
 import time
-
 from funcoes import *
 
 def f():
@@ -73,16 +71,6 @@ def f():
             botao_obter.click()
             #driver.find_element(By.CLASS_NAME, '//*[@id="dieselReactWrapper"]/div/div[4]/main/div[2]/div/div/div/div[2]/div[4]/div/aside/div/div/div[5]/div/button').click()
             time.sleep(10)
-            # WebDriverWait(driver, 300).until(
-            #     EC.frame_to_be_available_and_switch_to_it(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe')
-            # )
-            # WebDriverWait(driver, 300).until(
-            #     EC.text_to_be_present_in_element(By.CLASS_NAME, 'css-8en90x', ('OBTER' or 'NA BIBLIOTECA' or 'INDISPONÍVEL'))
-            # )
-            # print ('teste')
-            # WebDriverWait(driver, 10).until(
-            #     EC.element_to_be_clickable(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button')
-            # )
             driver.switch_to.frame(driver.find_element(By.XPATH, '//*[@id="webPurchaseContainer"]/iframe'))
             print(driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button').text) #//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/button
             driver.find_element(By.XPATH, '//*[@id="purchase-app"]/div/div/div/div[2]/div[2]/div/button').click()
@@ -100,7 +88,6 @@ def f():
             except:
                 print('Não achou os botões INDISPONÍVEL ou NA BIBLIOTECA')
                 #driver.quit()
-
     print(links)
 
 if __name__ == '__main__':

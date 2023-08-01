@@ -3,8 +3,6 @@ import pickle
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium import webdriver
 
 
@@ -48,7 +46,8 @@ def login_with_epic(driver):
 
 
 def get_chrome_version():
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager(path = r"C:\Temp\Sessoes\chromedriver").install()))
+    driver = webdriver.Chrome()
+    # driver = webdriver.Chrome(service=Service(ChromeDriverManager(path = r"C:\Temp\Sessoes\chromedriver").install()))
     # driver.get('www.google.com.br')
     version = driver.capabilities["browserVersion"].split('.')[0]
     driver.quit()
