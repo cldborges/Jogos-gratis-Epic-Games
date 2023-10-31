@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
+from undetected_chromedriver import ChromeOptions
 
 
 def cadastrar_credenciais(usuario='', senha=''):
@@ -33,15 +34,18 @@ def login_with_epic(driver):
     #WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.CLASS_NAME, 'sc-cOFTSb')))
     #WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.CLASS_NAME, 'sc-cOFTSb')))
     #driver.find_element(By.CLASS_NAME, 'sc-cOFTSb').click()
-    WebDriverWait(driver, 50).until(EC.element_to_be_clickable((By.ID, 'login-with-epic')))
+    # WebDriverWait(driver, 50).until(EC.element_to_be_clickable((By.ID, 'login-with-epic')))
     # WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.ID, 'login-with-epic')))
-    driver.find_element(By.ID, 'login-with-epic').click()
+    # driver.find_element(By.ID, 'login-with-epic').click()
     WebDriverWait(driver, 50).until(EC.presence_of_element_located((By.ID, 'email')))
     #driver.find_element(By.CLASS_NAME, 'sc-cOFTSb').click()
     usuario, senha = ler_credenciais()
     driver.find_element(By.ID, 'email').send_keys(usuario)
+    driver.find_element(By.ID, 'send').click()
+    WebDriverWait(driver, 60).until(EC.presence_of_element_located((By.ID, 'password')))
+    # time.sleep(60)
     driver.find_element(By.ID, 'password').send_keys(senha)
-    time.sleep(2)
+    time.sleep(15)
     driver.find_element(By.ID, 'sign-in').click()
 
 
@@ -53,3 +57,9 @@ def get_chrome_version():
     driver.quit()
     print(f'Versão do chrome: {version}')
     return version
+
+
+class Options(ChromeOptions):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.headless: bool = False

@@ -6,11 +6,13 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 from funcoes import *
 
+
 def f():
 
-    chrome_version = get_chrome_version()
+    # chrome_version = get_chrome_version()
     url = 'https://store.epicgames.com/pt-BR/free-games'
-    driver = uc.Chrome(version_main=chrome_version)
+    driver = uc.Chrome(options=Options())
+    # driver = uc.Chrome(version_main=chrome_version)
     #driver.get('https://nowsecure.nl')  # known url using cloudflare's "under attack mode"
     #cookies = pickle.load(open("cookies.pkl", "rb"))
 
@@ -21,8 +23,11 @@ def f():
 
     #login   
     login_with_epic(driver)
-    WebDriverWait(driver, 50).until(
-            EC.presence_of_element_located((By.LINK_TEXT, 'CLDBORGES')))
+    time.sleep(20)
+    # WebDriverWait(driver, 50).until(
+    #         EC.presence_of_element_located((By.LINK_TEXT, 'Ajuda')))
+    # WebDriverWait(driver, 50).until(
+    #     EC.presence_of_element_located((By.LINK_TEXT, 'Baixar')))
     # time.sleep(40) #era 60
 
     driver.maximize_window()
